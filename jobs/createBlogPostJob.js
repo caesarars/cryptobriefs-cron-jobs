@@ -243,7 +243,11 @@ async function createBlogPostJob() {
       return;
     }
 
-    const optimizedTitle = generateOptimizedTitle(ideaTitle)
+    const optimizedTitle = await generateOptimizedTitle(ideaTitle);
+    if (!optimizedTitle || optimizedTitle === "Failed to generate title.") {
+      console.warn("[CRON] AI: optimized title not ready, skipping blog creation");
+      return;
+    }
 
     console.log("[CRON] AI: selected idea", ideaTitle);
     console.log("[CRON] AI: Optimize title", optimizedTitle);
@@ -258,7 +262,7 @@ async function createBlogPostJob() {
 
     console.log("[CRON] AI: article generated");
 
-    const imageResponse = await generateImage(ideaTitle, DEFAULT_TONE);
+    const imageResponse = await generateImage(optimizedTitle, DEFAULT_TONE);
     let uploadedImageUrl = "";
 
     if (typeof imageResponse !== "string" && imageResponse && imageResponse.base64) {
@@ -269,9 +273,9 @@ async function createBlogPostJob() {
 
     try {
       const blogResponse = await axios.post(`${BASE_API_URL}api/blog`, {
-        title: ideaTitle,
+        title: optimizedTitle,
         content: article,
-        blog: ideaTitle,
+        blog: optimizedTitle,
         tag: DEFAULT_TAGS,
         imageUrl: uploadedImageUrl,
       });
