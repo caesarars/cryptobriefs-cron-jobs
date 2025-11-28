@@ -32,7 +32,7 @@ async function generateBlogPost(
   const prompt = `
 You are an expert financial writer specializing in cryptocurrency and blockchain technology for a blog called "Crypto Briefs".
 
-Your task is to research me a current sentiment in cryptocurrency at this time when i prompt this after that, i need you to create an article about it
+Your task is to write a blog post about the following topic: "${topic}".
 
 Please adhere to the following parameters for the article:
 - Tone: ${tone}
@@ -71,6 +71,7 @@ const generateIdeasTrends = async () =>  {
   try {
     const prompt = `
   You are a senior crypto SEO strategist and market analyst.
+  Your task is to research me a current sentiment in cryptocurrency at this time when i prompt this after that
   Analyze the past 24 hours of crypto activity and identify the 3–4 strongest narratives based on:
   - Social momentum (X viral threads, trending tokens)
   - Whale movements & on-chain anomalies
