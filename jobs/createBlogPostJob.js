@@ -67,7 +67,7 @@ AND PLEASE DO NOT WRAP it by DOUBLE QUOTES.
   }
 }
 
-async function generateIdeasTrends() {
+const generateIdeasTrends = async () =>  {
   try {
     const prompt = `
   You are a senior crypto SEO strategist and market analyst.
@@ -103,6 +103,32 @@ async function generateIdeasTrends() {
     return "Failed to generate title.";
   }
 }
+
+const generateOptimizedTitle = async (currentTitle) => {
+  const prompt = `
+    You are an expert copywriter and SEO specialist. Your task is to take a blog post title and make it more compelling, engaging, and SEO-friendly.
+    Keep the core topic the same, but improve the wording to attract more readers.
+    Do not add quotes or any extra explanatory text around your response. Only return the improved title as a single line of plain text.
+    Make sure the optimized title is not too long
+    Original Title: "${currentTitle}"
+
+    Optimized Title:
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-pro-preview',
+      contents: prompt,
+       config: {
+        temperature: 0.8,
+      }
+    });
+    return response.text.replace(/"/g, '').trim();
+  } catch (error) {
+    console.error("Error generating optimized title:", error);
+    return "Failed to generate title.";
+  }
+};
 
 function extractIdeas(rawText) {
   if (!rawText) return [];
@@ -217,10 +243,14 @@ async function createBlogPostJob() {
       return;
     }
 
+    const optimizedTitle = generateOptimizedTitle(ideaTitle)
+
     console.log("[CRON] AI: selected idea", ideaTitle);
+    console.log("[CRON] AI: Optimize title", optimizedTitle);
+
 
     const article = await generateBlogPost(
-      ideaTitle,
+      optimizedTitle,
       DEFAULT_TONE,
       DEFAULT_LENGTH,
       DEFAULT_AUDIENCE
