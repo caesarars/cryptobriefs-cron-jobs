@@ -53,7 +53,7 @@ AND PLEASE DO NOT WRAP it by DOUBLE QUOTES.
       model: "gemini-3-pro-preview",
       contents: prompt,
       config: {
-        temperature: 0.7,
+        temperature: 1,
         topP: 1,
         topK: 32,
       },
@@ -93,7 +93,7 @@ const generateIdeasTrends = async () =>  {
       model: "gemini-3-pro-preview",
       contents: prompt,
       config: {
-        temperature: 0.8,
+        temperature: 1,
       },
     });
 
