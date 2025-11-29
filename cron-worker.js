@@ -31,7 +31,7 @@ async function main() {
   });
 
   // Cron tiap jam buat blog (menit ke-15 biar gak tabrakan sama insert news)
-  cron.schedule("15 * * * *", () => {
+  cron.schedule("0 * * * *", () => {
     console.log("✍️  Running createBlogPostJob (cron)");
     createBlogPostJob().catch((err) =>
       console.error("Blog cron error:", err)

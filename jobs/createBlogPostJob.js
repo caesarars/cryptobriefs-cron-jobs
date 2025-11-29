@@ -43,7 +43,7 @@ The post should be well-structured and formatted in Markdown.
 Use markdown for structure, including headings (e.g., '## Subheading'), bulleted lists (e.g., '- List item'), and bold text (e.g., '**bold**').
 Do not include a main title (H1, or '# Title') in the output, as the user has already provided it.
 Make sure it is compatible with ReactMarkdown library.
-And make sure it has escape string because it will be copied into Postman.
+And make sure it has escape string because it will be copied into Postman, dont use any blackslash that can interupt the escape string.
 Start directly with the main content of the article.
 AND PLEASE DO NOT WRAP it by DOUBLE QUOTES.
 `;
@@ -53,7 +53,7 @@ AND PLEASE DO NOT WRAP it by DOUBLE QUOTES.
       model: "gemini-3-pro-preview",
       contents: prompt,
       config: {
-        temperature: 1,
+        temperature: 0.8,
         topP: 1,
         topK: 32,
       },
@@ -93,7 +93,7 @@ const generateIdeasTrends = async () =>  {
       model: "gemini-3-pro-preview",
       contents: prompt,
       config: {
-        temperature: 1,
+        temperature: 0.8,
       },
     });
 
