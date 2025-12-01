@@ -3,7 +3,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const cron = require("node-cron");
 const { insertNewsJob } = require("./jobs/insertNewsJobs");
-const { createBlogPostJob } = require("./jobs/createBlogPostJob");
+const { createBlogPostJob, addSummaryNews } = require("./jobs/createBlogPostJob");
+
 
 const mongoURI = process.env.MONGO_DB_URL;
 const password = process.env.PASSWORD;
@@ -29,6 +30,12 @@ async function main() {
     console.log("⏰ Running insertNewsJob (cron)");
     insertNewsJob().catch((err) => console.error("Cron error:", err));
   });
+
+  // Cron tiap jam * */6
+  cron.schedule("0 */6 * * *", () => {
+    console.log("⏰ Running addSummaryNews (cron)");
+    addSummaryNews().catch((err) => {console.error('Cron error:', err)}) 
+  })
 
   // Cron tiap jam buat blog (menit ke-15 biar gak tabrakan sama insert news)
   cron.schedule("0 * * * *", () => {

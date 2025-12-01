@@ -5,6 +5,7 @@ const News = require("../models/News");
 const http = axios.create({ timeout: 5000 });
 const aiHttp = axios.create({ timeout: 10000 }); // khusus AI, kasih timeout lebih longgar
 const parser = new Parser();
+const BASE_API_URL = process.env.BASE_API_URL;
 
 // List RSS crypto yang kita pakai
 const FEEDS = [
@@ -223,5 +224,12 @@ async function insertNewsJob() {
   );
 }
 
+async function addSummaryNews () {
+    console.log('[CRON] Add Summary : Starting')
+    const response = await axios.post(`${BASE_API_URL}api/briefs/addSummary`, {});
+    console.log("Add Summary Response : ", response)
+    console.log('[CRON] Add Summary : Finished')
+}
 
-module.exports = { insertNewsJob };
+
+module.exports = { insertNewsJob, addSummaryNews };
