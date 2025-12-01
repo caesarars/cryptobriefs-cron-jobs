@@ -20,30 +20,30 @@ async function connectDB() {
 }
 
 async function main() {
-  await connectDB();
-  createBlogPostJob().catch((err) =>
-    console.error("First blog job error:", err)
-  );
-
-  // Cron tiap jam (menit ke-0)
-  cron.schedule("0 * * * *", () => {
-    console.log("⏰ Running insertNewsJob (cron)");
-    insertNewsJob().catch((err) => console.error("Cron error:", err));
-  });
-
-  // Cron tiap jam * */6
-  cron.schedule("0 */6 * * *", () => {
-    console.log("⏰ Running addSummaryNews (cron)");
-    addSummaryNews().catch((err) => {console.error('Cron error:', err)}) 
-  })
-
-  // Cron tiap jam buat blog (menit ke-15 biar gak tabrakan sama insert news)
-  cron.schedule("0 * * * *", () => {
-    console.log("✍️  Running createBlogPostJob (cron)");
-    createBlogPostJob().catch((err) =>
-      console.error("Blog cron error:", err)
-    );
-  });
+  //await connectDB();
+  //createBlogPostJob().catch((err) =>
+  //  console.error("First blog job error:", err)
+  //);
+//
+  //// Cron tiap jam (menit ke-0)
+  //cron.schedule("0 * * * *", () => {
+  //  console.log("⏰ Running insertNewsJob (cron)");
+  //  insertNewsJob().catch((err) => console.error("Cron error:", err));
+  //});
+//
+  //// Cron tiap jam * */6
+  //cron.schedule("0 */6 * * *", () => {
+  //  console.log("⏰ Running addSummaryNews (cron)");
+  //  addSummaryNews().catch((err) => {console.error('Cron error:', err)}) 
+  //})
+//
+  //// Cron tiap jam buat blog (menit ke-15 biar gak tabrakan sama insert news)
+  //cron.schedule("0 * * * *", () => {
+  //  console.log("✍️  Running createBlogPostJob (cron)");
+  //  createBlogPostJob().catch((err) =>
+  //    console.error("Blog cron error:", err)
+  //  );
+  //});
 }
 
 main();
